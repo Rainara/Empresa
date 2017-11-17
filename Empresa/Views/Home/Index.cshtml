@@ -1,0 +1,45 @@
+﻿@model List<Empresa.Entities.Employee>
+
+<h2 class="text-center">Lista de Funcionarios</h2>
+
+<button type="button" class="btn btn-primary btn-group-sm" onclick="location.href='@Url.Action("EmployeeForm", "Employee")'">Cadastro Funcionario</button>
+
+<br />
+
+
+@using (Html.BeginForm())
+{
+    @Html.Label("Pesquisar Funcionário: ")
+    @Html.TextBox("search", null, new { id = "search" })
+    <input type="submit" value="Pesquisar" />
+}
+
+
+<table class="table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nome</th>
+            <th>Cargo</th>
+            <th>Salário</th>
+            <th>Departamento</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employee in Model)
+        {
+            <tr>
+                <td>@employee.Id</td>
+                <td>@employee.Name</td>
+                <td>@employee.Position</td>
+                <td>@employee.Salary</td>
+                <td>@employee.department</td>
+
+            </tr>
+        }
+
+
+
+    </tbody>
+
+</table>

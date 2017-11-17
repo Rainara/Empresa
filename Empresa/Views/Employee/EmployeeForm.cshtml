@@ -1,0 +1,26 @@
+﻿@model Empresa.Entities.Employee
+
+<h2>EmployeeForm</h2>
+
+@using (@Html.BeginForm("AddEmployee", "Employee", FormMethod.Post))
+{
+    @Html.LabelFor(u => u.Name, "Nome do Funcionário: ")
+    @Html.TextBoxFor(u => u.Name, new { @class = "form-control" })
+    @Html.ValidationMessageFor(u => u.Name)
+
+    @Html.LabelFor(u => u.Position, "Cargo do Funcionário: ")
+    @Html.TextBoxFor(u => u.Position, new { @class = "form-control" })
+    @Html.ValidationMessageFor(u => u.Position)
+
+    @Html.LabelFor(u => u.Salary, "Salário do Funcionário: ")
+    @Html.TextBoxFor(u => u.Salary, new { @class = "form-control" })
+    @Html.ValidationMessageFor(u => u.Salary)
+
+    @Html.LabelFor(u => u.department, "Departamento:")
+    @Html.TextBoxFor(u => u.department, new { @class = "form-control" })
+    @Html.ValidationMessageFor(u => u.department)
+
+
+    <input type="submit" class="btn btn-primary btn-group-sm" value="Cadastrar" />
+
+}
