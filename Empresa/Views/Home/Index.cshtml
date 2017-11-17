@@ -1,45 +1,71 @@
 ﻿@model List<Empresa.Entities.Employee>
 
 <h2 class="text-center">Lista de Funcionarios</h2>
-
-<button type="button" class="btn btn-primary btn-group-sm" onclick="location.href='@Url.Action("EmployeeForm", "Employee")'">Cadastro Funcionario</button>
-
+<div class="pull-right">
+    <button type="button" class="btn btn-primary btn-sm" onclick="location.href='@Url.Action("EmployeeForm", "Employee")'">Cadastro Funcionario</button>
+</div>
 <br />
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-
-@using (Html.BeginForm())
-{
-    @Html.Label("Pesquisar Funcionário: ")
-    @Html.TextBox("search", null, new { id = "search" })
-    <input type="submit" value="Pesquisar" />
-}
-
-
-<table class="table-striped">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Nome</th>
-            <th>Cargo</th>
-            <th>Salário</th>
-            <th>Departamento</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var employee in Model)
-        {
-            <tr>
-                <td>@employee.Id</td>
-                <td>@employee.Name</td>
-                <td>@employee.Position</td>
-                <td>@employee.Salary</td>
-                <td>@employee.department</td>
-
-            </tr>
+<div class="container">
+    @using (Html.BeginForm())
+    {
+        @Html.Label("Pesquisar Funcionário: ")
+        @Html.TextBox("search", null, new { id = "search" })
+        <input type="submit" value="Pesquisar" />
+    }
+</div>
+<script>
+    $("#search").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: '@Url.Action("GetEmployees", "Home")',
+                dataType: "json",
+                data: { search: $("#search").val() },
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return { label: item.Name, value: item.Name };
+                    }));
+                },
+                error: function (xhr, status, error) {
+                    alert("Error");
+                }
+            });
         }
+    });
+</script>
+<br />
+<div class="table-responsive">
+
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Cargo</th>
+                <th>Salário</th>
+                <th>Departamento</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in Model)
+            {
+                <tr>
+                    <td>@employee.Id</td>
+                    <td>@employee.Name</td>
+                    <td>@employee.Position</td>
+                    <td>@employee.Salary</td>
+                    <td>@employee.department</td>
+
+                </tr>
+            }
 
 
 
-    </tbody>
+        </tbody>
 
-</table>
+    </table>
+
+</div>
